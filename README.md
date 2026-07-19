@@ -1,3 +1,3 @@
-# FlowSort-Web V1
+# FlowSort Web
 Less complex, More progress
 
