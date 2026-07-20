@@ -152,6 +152,11 @@
           welcomeMsg.innerHTML = t["login.redirecting"];
           seccionPublica.style.display = "none";
           areaPrivada.style.display = "flex";
+
+          // Redirección a ./desktop tras medio segundo
+          setTimeout(() => {
+            window.location.href = "../desktop";
+          }, 500);
         } else {
           welcomeMsg.removeAttribute("data-i18n");
           welcomeMsg.textContent = "";
