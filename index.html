@@ -9,6 +9,7 @@
   <body>
     <nav class="nav">
       <a class="brand"><img src="./assets/flowsort-logo.png" />FlowSort</a>
+      <button class="menu" type="button" aria-label="Menu">☰</button>
       <div class="links">
         <a href="#producto" data-i18n="nav.product">Product</a>
         <a href="#metodo" data-i18n="nav.method">Method</a>
@@ -31,7 +32,6 @@
         </div>
         <div id="nav-auth"></div>
       </div>
-      <button class="menu">☰</button>
     </nav>
     <main>
       <section class="hero">
@@ -613,6 +613,9 @@
     </script>
     <script type="module">
       import { initNavAuth } from "./assets/auth.js";
+      import { initMobileNav } from "./assets/mobile.js";
+
+      initMobileNav();
 
       const authI18n = {
         en: { "nav.login": "Log in", "nav.panel": "Panel", "nav.logout": "Log out" },
@@ -626,35 +629,5 @@
         i18n: authI18n,
       });
     </script>
-      <script>
-        (function () {
-          const menuBtn = document.querySelector(".menu");
-          const nav = document.querySelector(".nav");
-          const navLinks = document.querySelectorAll(".nav .links a, .nav .nav-login, .nav .user-menu-btn, .nav .user-dropdown-item");
-          if (!menuBtn || !nav) return;
-
-          menuBtn.setAttribute("aria-expanded", "false");
-
-          menuBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            const isOpen = nav.classList.toggle("open");
-            menuBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
-          });
-
-          navLinks.forEach((link) =>
-            link.addEventListener("click", () => {
-              nav.classList.remove("open");
-              menuBtn.setAttribute("aria-expanded", "false");
-            })
-          );
-
-          document.addEventListener("click", (e) => {
-            if (!nav.contains(e.target)) {
-              nav.classList.remove("open");
-              menuBtn.setAttribute("aria-expanded", "false");
-            }
-          });
-        })();
-      </script>
   </body>
 </html>

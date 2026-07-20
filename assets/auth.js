@@ -159,3 +159,41 @@ export async function logout() {
   await signOut(auth);
   clearSessionCookie();
 }
+
+export function requireAuth(opts = {}) {
+  const loginHref = opts.loginHref || "../login/";
+  const loader = document.getElementById("auth-loader");
+
+  document.documentElement.classList.add("auth-pending");
+
+  return new Promise((resolve) => {
+    let settled = false;
+    const finish = (user) => {
+      if (settled) return;
+      settled = true;
+      document.documentElement.classList.remove("auth-pending");
+      loader?.classList.add("hidden");
+      resolve(user);
+      opts.onAuthed?.(user);
+    };
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setSessionCookie(user);
+        finish(user);
+        return;
+      }
+
+      clearSessionCookie();
+      if (settled) return;
+      settled = true;
+
+      const loginUrl = new URL(loginHref, window.location.href);
+      loginUrl.searchParams.set(
+        "redirect",
+        opts.returnTo || window.location.pathname + window.location.search,
+      );
+      window.location.replace(loginUrl.toString());
+    });
+  });
+}
