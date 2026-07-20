@@ -56,6 +56,83 @@ body {
 .nav-login:hover {
   color: #f1efe9;
 }
+.user-menu {
+  position: relative;
+  display: inline-block;
+}
+.user-menu-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid #ffffff12;
+  border-radius: 999px;
+  padding: 4px 12px 4px 4px;
+  cursor: pointer;
+  color: #f1efe9;
+  font-size: 13px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.user-menu-btn:hover {
+  border-color: #ffffff28;
+  background: #ffffff08;
+}
+.user-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #2a2d32;
+}
+.user-name {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.user-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 160px;
+  background: #171819;
+  border: 1px solid #ffffff18;
+  border-radius: 10px;
+  padding: 6px;
+  z-index: 200;
+  box-shadow: 0 12px 40px #0006;
+}
+.user-dropdown.show {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.user-dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #c9c7c0;
+  font-size: 13px;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.user-dropdown-item:hover {
+  background: #ffffff0c;
+  color: #f1efe9;
+}
+.user-dropdown-item.logout {
+  color: #e88;
+}
+.user-dropdown-item.logout:hover {
+  background: #e8444418;
+  color: #faa;
+}
 .menu {
   display: none;
   background: none;
@@ -1380,8 +1457,23 @@ body.page-exit {
   /* increase tap targets in nav dropdown */
   .nav.open .links a,
   .nav.open .nav-login,
+  .nav.open .user-menu,
   .nav.open .lang-selector {
     padding: 12px 8px;
     font-size: 16px;
+  }
+  .nav.open .user-menu-btn {
+    width: 100%;
+    justify-content: flex-start;
+    padding: 8px 12px;
+  }
+  .nav.open .user-dropdown {
+    position: static;
+    display: none;
+    margin-top: 8px;
+    box-shadow: none;
+  }
+  .nav.open .user-dropdown.show {
+    display: flex;
   }
 }

@@ -94,28 +94,17 @@
 
     <!-- Firebase SDK v10+ y Lógica de Autenticación -->
     <script type="module">
-      // Importamos los módulos necesarios directamente de la CDN de Firebase
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
       import {
-        getAuth,
         signInWithPopup,
         GoogleAuthProvider,
-        onAuthStateChanged,
       } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+      import {
+        auth,
+        onAuthReady,
+        setSessionCookie,
+        clearSessionCookie,
+      } from "../assets/auth.js";
 
-      // Configuración de Firebase del Proyecto
-      const firebaseConfig = {
-        apiKey: "AIzaSyBeH4fm9pEHszy61udCItivYuztILMooKo",
-        authDomain: "flowsort-3b6f7.firebaseapp.com",
-        projectId: "flowsort-3b6f7",
-        storageBucket: "flowsort-3b6f7.firebasestorage.app",
-        messagingSenderId: "168059141026",
-        appId: "1:168059141026:web:321443846637f586da90fb",
-      };
-
-      // Inicializamos la aplicación de Firebase
-      const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
       const provider = new GoogleAuthProvider();
 
       // Referencias a los elementos del DOM
@@ -141,11 +130,12 @@
       });
 
       // Observador de Estado de Autenticación
-      onAuthStateChanged(auth, (user) => {
+      onAuthReady((user) => {
         loader.style.display = "none";
         loginBtn.removeAttribute("disabled");
 
         if (user) {
+          setSessionCookie(user);
           welcomeMsg.setAttribute("data-i18n", "login.redirecting");
           const lang = document.documentElement.lang || "en";
           const t = translations[lang] || translations["en"];
@@ -153,11 +143,11 @@
           seccionPublica.style.display = "none";
           areaPrivada.style.display = "flex";
 
-          // Redirección a ./desktop tras medio segundo
           setTimeout(() => {
             window.location.href = "../desktop";
           }, 500);
         } else {
+          clearSessionCookie();
           welcomeMsg.removeAttribute("data-i18n");
           welcomeMsg.textContent = "";
           seccionPublica.style.display = "block";

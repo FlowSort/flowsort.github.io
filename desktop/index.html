@@ -27,6 +27,7 @@
             </button>
           </div>
         </div>
+        <div id="nav-auth"></div>
       </div>
     </nav>
 
@@ -357,6 +358,19 @@
 
       // Init Lucide after IIFE so DOM is ready
       lucide.createIcons();
+    </script>
+    <script type="module">
+      import { initNavAuth } from "../assets/auth.js";
+
+      initNavAuth({
+        loginHref: "../login/",
+        panelHref: "./",
+        homeHref: "../",
+        i18n: {
+          en: { "nav.login": "Log in", "nav.panel": "Panel", "nav.logout": "Log out" },
+          es: { "nav.login": "Iniciar sesión", "nav.panel": "Panel", "nav.logout": "Cerrar sesión" },
+        },
+      });
     </script>
   </body>
 </html>

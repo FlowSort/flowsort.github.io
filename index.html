@@ -29,7 +29,7 @@
             </button>
           </div>
         </div>
-        <a class="nav-login" href="./login/" data-i18n="nav.login">Log in</a>
+        <div id="nav-auth"></div>
       </div>
       <button class="menu">☰</button>
     </nav>
@@ -293,7 +293,8 @@
             "nav.method": "Method",
             "nav.pricing": "Pricing",
             "nav.login": "Log in",
-            
+            "nav.panel": "Panel",
+            "nav.logout": "Log out",
             "hero.eyebrow": "FULL SERVICE",
             "hero.title-part1": "Less complex.",
             "hero.title-part2": "More progress.",
@@ -375,7 +376,8 @@
             "nav.method": "Método",
             "nav.pricing": "Precios",
             "nav.login": "Iniciar sesión",
-            
+            "nav.panel": "Panel",
+            "nav.logout": "Cerrar sesión",
             "hero.eyebrow": "SERVICIO COMPLETO",
             "hero.title-part1": "Menos complejo.",
             "hero.title-part2": "Más avance.",
@@ -609,11 +611,26 @@
         });
       })();
     </script>
+    <script type="module">
+      import { initNavAuth } from "./assets/auth.js";
+
+      const authI18n = {
+        en: { "nav.login": "Log in", "nav.panel": "Panel", "nav.logout": "Log out" },
+        es: { "nav.login": "Iniciar sesión", "nav.panel": "Panel", "nav.logout": "Cerrar sesión" },
+      };
+
+      initNavAuth({
+        loginHref: "./login/",
+        panelHref: "./desktop/",
+        homeHref: "./",
+        i18n: authI18n,
+      });
+    </script>
       <script>
         (function () {
           const menuBtn = document.querySelector(".menu");
           const nav = document.querySelector(".nav");
-          const navLinks = document.querySelectorAll(".nav .links a, .nav .nav-login");
+          const navLinks = document.querySelectorAll(".nav .links a, .nav .nav-login, .nav .user-menu-btn, .nav .user-dropdown-item");
           if (!menuBtn || !nav) return;
 
           menuBtn.setAttribute("aria-expanded", "false");
